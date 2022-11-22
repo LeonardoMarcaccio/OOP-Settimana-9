@@ -1,11 +1,17 @@
 plugins {
-    java
     application
+    java
+    id("org.danilopianini.gradle-java-qa") version "0.40.0"
 }
 
-val mainClass: String by project
+repositories {
+    mavenCentral()
+}
 
 application {
-    // The following allows to run with: ./gradlew -PmainClass=it.unibo.oop.MyMainClass run
-    mainClass.set(project.properties["mainClass"].toString())
+    mainClass.set("it.unibo.oop.*")
+}
+
+tasks.javadoc {
+    isFailOnError = false
 }

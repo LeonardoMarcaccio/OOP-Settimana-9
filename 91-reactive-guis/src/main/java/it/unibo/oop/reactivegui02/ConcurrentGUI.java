@@ -13,23 +13,26 @@ import javax.swing.SwingUtilities;
 /**
  * Second example of reactive GUI.
  */
-public final class ConcurrentGUI extends JFrame {
+public final class ConcurrentGUI extends JFrame { //NOPMD: 
 
-    private final double scale = 0.5;
-    final JLabel display = new JLabel();
-    
-    public ConcurrentGUI(){
+    private static final double SCALE = 0.5;
+    private final JLabel display = new JLabel();
+
+    /**
+     * Constructor Method for the GUI.
+     */
+    public ConcurrentGUI() {
         super();
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize((int) (screenSize.getWidth() * scale), (int) (screenSize.getHeight() * scale));
+        this.setSize((int) (screenSize.getWidth() * SCALE), (int) (screenSize.getHeight() * SCALE));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JPanel panel = new JPanel();
         panel.add(display);
-        
+
         final JButton up = new JButton("Up");
         panel.add(up);
-        
+
         final JButton down = new JButton("Down");
         panel.add(down);
 
@@ -70,7 +73,7 @@ public final class ConcurrentGUI extends JFrame {
                     }
                     Thread.sleep(100);
                 } catch (InvocationTargetException | InterruptedException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(); //NOPMD: required by the exercise
                 }
             }
         }

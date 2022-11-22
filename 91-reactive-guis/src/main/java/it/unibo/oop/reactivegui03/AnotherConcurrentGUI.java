@@ -15,19 +15,23 @@ import javax.swing.SwingUtilities;
  */
 public final class AnotherConcurrentGUI extends JFrame {
 
-    private final double scale = 0.5;
+    private static final int TIMER = 10_000;
+    private static final double SCALE = 0.5;
     private final JLabel display = new JLabel();
     private final JPanel panel = new JPanel();
     private final JButton up = new JButton("Up");
     private final JButton down = new JButton("Down");
     private final JButton stop = new JButton("Stop");
 
-    public AnotherConcurrentGUI(){
+    /**
+     * Constructor Method for my GUI. 
+     */
+    public AnotherConcurrentGUI() {
         super();
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize((int) (screenSize.getWidth() * scale), (int) (screenSize.getHeight() * scale));
+        this.setSize((int) (screenSize.getWidth() * SCALE), (int) (screenSize.getHeight() * SCALE));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
         panel.add(display);
         panel.add(up);
         panel.add(down);
@@ -35,16 +39,16 @@ public final class AnotherConcurrentGUI extends JFrame {
 
         final Agent agent = new Agent();
         new Thread(agent).start();
-        
+
         new Thread(new Runnable() {
             @Override
-            public void run() {
+            public void run() { //NOPMD: not required
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(TIMER);
                     agent.stopCounting();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }   
+                } catch (Exception ex) { //NOPMD: suppressed because it's an exercise
+                    ex.printStackTrace(); //NOPMD: suppressed because it's an exercise
+                }
             }
         }).start();
 
@@ -52,12 +56,15 @@ public final class AnotherConcurrentGUI extends JFrame {
         this.setVisible(true);
 
         stop.addActionListener((e) -> {
-            agent.stopCounting();                       
+            agent.stopCounting();
         });
         up.addActionListener((e) -> agent.setUp());
         down.addActionListener((e) -> agent.setDown());
     }
 
+    /**
+     * A Method used to disable the Jbuttons on my GUI.
+     */
     public void shut() {
         this.stop.setEnabled(false);
         this.up.setEnabled(false);
@@ -82,7 +89,7 @@ public final class AnotherConcurrentGUI extends JFrame {
                     }
                     Thread.sleep(100);
                 } catch (InvocationTargetException | InterruptedException ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace(); //NOPMD: suppressed because it's an exercise
                 }
             }
         }
@@ -91,12 +98,12 @@ public final class AnotherConcurrentGUI extends JFrame {
             this.stop = true;
             try {
                 AnotherConcurrentGUI.this.shut();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception e) { //NOPMD: suppressed because it's an exercise
+                e.printStackTrace(); //NOPMD: suppressed because it's an exercise
             }
         }
 
-        public void setUp() {
+        public void setUp() { 
             this.direction = true;
         }
 

@@ -16,7 +16,7 @@ public final class MultiThreadedSumMatrix implements SumMatrix {
      * @param nthread
      *            no. of thread performing the sum.
      */
-    public MultiThreadedSumMatrix (final int nthread) {
+    public MultiThreadedSumMatrix(final int nthread) {
         this.nthread = nthread;
     }
 
@@ -29,8 +29,8 @@ public final class MultiThreadedSumMatrix implements SumMatrix {
         /**
          * Build a new worker.
          * 
-         * @param list
-         *            the list to sum
+         * @param matrix
+         *            the matrix to sum
          * @param startpos
          *            the initial position for this worker
          * @param nelem
@@ -64,13 +64,13 @@ public final class MultiThreadedSumMatrix implements SumMatrix {
     }
 
     @Override
-    public double sum(double[][] matrix) {
+    public double sum(final double[][] matrix) {
         final int size = (matrix.length / nthread) + 1;
         final List<Worker> workers = new ArrayList<>(nthread);
         for (int start = 0; start < matrix.length; start += size) {
             workers.add(new Worker(matrix, start, size));
         }
-        
+
         for (final Worker w: workers) {
             w.start();
         }
